@@ -13,6 +13,7 @@ class LoginUser():
         """Initlize username and password."""
         self.username = username
         self.password = password
+        self.cookies = None
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/53.0.2785.143 Chrome/53.0.2785.143 Safari/537.36',
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -25,9 +26,8 @@ class LoginUser():
         """User login."""
         get_response = requests.get(Baseurl)
         request_cookies = get_response.cookies
-        ChkCode_response = requests.get(ChkCodeurl)
-        ChkCode_cookies = ChkCode_response.cookies
-        ChkCode = re.search(r'?<=ChkCode=).{4}',ChkCode_cookies['validateCookie']).group(0)
+        ChkCoderesp = requests.get(ChkCodeurl)
+        ChkCode = re.search('(?<=ChkCode=).{4}',ChkCoderesp.cookies['validateCookie']).group(0)
         post_data = {
             'Txt_UserName': self.username,
             'Txt_PassWord': self.password,
@@ -38,11 +38,11 @@ class LoginUser():
                                       headers=self.headers,
                                       cookies=request_cookies,
                                       data=post_data)
-        self.cookies = cookies
+        self.cookies =request_cookies
 
     def get_page(self):
         """Get user index page."""
         self.login()
-        response = requests.get("http://222.204.3.49:8082/user/Index.aspx",cookies=self.cookies)
+        response = requests.get("http://222.204.3.49:8082/user/Index.aspx", cookies=self.cookies)
         # get page of 'http://222.204.3.49:8082/user/Index.aspx'
         return response.text
