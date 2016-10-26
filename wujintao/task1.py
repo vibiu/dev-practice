@@ -20,7 +20,7 @@ class LoginUser():
         self.password = password
 
     def ask_cookie(self,url):
-        """get ciikies from urls."""
+        """get cookies from urls."""
         cookie = http.cookiejar.CookieJar()
         #  to save cookie object
         handler = request.HTTPCookieProcessor(cookie)
