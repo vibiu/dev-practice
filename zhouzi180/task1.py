@@ -27,7 +27,7 @@ class LoginUser():
         get_response = requests.get(Baseurl)
         request_cookies = get_response.cookies
         ChkCoderesp = requests.get(ChkCodeurl)
-        ChkCode = re.search('[0-9A-Z]{4}',ChkCoderesp.cookies['validateCookie']).group(0)
+        ChkCode = re.search('(?<=ChkCode=).{4}',ChkCoderesp.cookies['validateCookie']).group(0)
         post_data = {
             'Txt_UserName': self.username,
             'Txt_PassWord': self.password,
