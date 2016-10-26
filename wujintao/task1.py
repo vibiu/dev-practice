@@ -41,7 +41,7 @@ class LoginUser():
             'Btn_login': ''
         }
 
-        headers = requests.get(url, params=data, cookies=Cookies)
+        headers = requests.get(url, data=data, cookies=Cookies)
         print (headers.text)
 
     def get_page(self):
