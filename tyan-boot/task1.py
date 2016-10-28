@@ -21,31 +21,23 @@ class LoginUser():
         """User login."""
         response = requests.get(url)
         soup = BeautifulSoup(response.text, "html5lib")
-        #get view state
+        # get view state
         view_state = soup.select("#__VIEWSTATE")[0].attrs['value']
-        #request check code gif
-        ckdata = requests.get(chk_code_url)
-        #from response cookie find check code
-        ckcode = re.search('(?<=ChkCode=).*', ckdata.cookies['validateCookie']).group(0)
-        #full check code cookie
-        chk_cookie = ckdata.cookies['validateCookie']
-        session = ckdata.cookies['ASP.NET_SessionId']
 
-        cookies = {'validateCookie': chk_cookie,
-                   'ASP.NET_SessionId': session}
+        cookies = {'validateCookie': "ChkCode=TYAN",
+                   'ASP.NET_SessionId': response.cookies['ASP.NET_SessionId']}
 
         post_data = {
             '__VIEWSTATE': view_state,
             'Txt_UserName': self.username,
             'Txt_PassWord': self.password,
-            'Txt_Yzm': ckcode,
+            'Txt_Yzm': "tyan",
             'Btn_login': ''
         }
 
-        response = requests.post(url, cookies=cookies, data=post_data)
+        requests.post(url, cookies=cookies, data=post_data)
 
         self.cookies = cookies
-
 
     def get_page(self):
         """Get user index page."""
