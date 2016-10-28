@@ -24,21 +24,25 @@ class LoginUser():
 
     def login(self):
         """User login."""
-        get_response = requests.get(Baseurl)
-        request_cookies = get_response.cookies
+
         ChkCoderesp = requests.get(ChkCodeurl)
         ChkCode = re.search('(?<=ChkCode=).{4}',ChkCoderesp.cookies['validateCookie']).group(0)
         post_data = {
-            'Txt_UserName': self.username,
-            'Txt_PassWord': self.password,
-            'Txt_Yzm': ChkCode,
-            'Btn_login': ''
-        }
+            '__LASTFOCUS':'',
+            '__VIEWSTATE':'/wEPDwUKMTIyMDg1NDMxNGRkWqLP0CWZLUdRH3hlV0v6WL0OoKVWTnjLKYdxAUqfTV8=',
+            '__EVENTTARGET':'',
+            '_EVENTARGUMENT':'',
+            'Txt_UserName':self.username,
+            'Txt_PassWord':self.password,
+            'Txt_Yzm':ChkCode,
+            'Btn_login':''
+        }#data少了前4行，之前就报错非法登录
+        self.cookies =ChkCoderesp.cookies
         post_response = requests.post(Baseurl,
                                       headers=self.headers,
-                                      cookies=request_cookies,
+                                      cookies=self.cookies,
                                       data=post_data)
-        self.cookies =request_cookies
+
 
     def get_page(self):
         """Get user index page."""
