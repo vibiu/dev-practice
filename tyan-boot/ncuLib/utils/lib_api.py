@@ -36,7 +36,6 @@ def api_search(name, page=1):
         return {'err': 2, 'msg': "search empty"}
 
     if total_num is None:
-        print("total none")
         return {'err': 3, 'msg': "search empty"}
 
     ret_data["total_num"] = total_num
