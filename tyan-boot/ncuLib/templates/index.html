@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/foundation.min.css">
+    <title>图书馆订阅系统</title>
+    <script type="text/javascript">
+        function myFunction() {
+            console.log('gds');
+            document.getElementById("try1").style.display = "block";
+            document.getElementById("try2").style.display = "none";
+            document.getElementById("try3").style.display = "none";
+            document.getElementById("top").style.display = "block"
+        }
+        function show2() {
+            document.getElementById("try2").style.display = "block";
+            document.getElementById("try1").style.display = "none";
+            document.getElementById("try3").style.display = "none";
+            document.getElementById("top").style.display = "block"
+        }
+        function show3() {
+            document.getElementById("try3").style.display = "block";
+            document.getElementById("try1").style.display = "none";
+            document.getElementById("try2").style.display = "none";
+            document.getElementById("top").style.display = "none"
+        }
+        function showsousuo() {
+            document.getElementById("sousuo-show").style.display = "block";
+            document.getElementById("sousuo-hide").style.display = "none"
+        }
+        function hidesousuo() {
+            document.getElementById("sousuo-hide").style.display = "block";
+            document.getElementById("sousuo-show").style.display = "none"
+        }
+        function showadd() {
+            document.getElementById("content-in").style.display = "none";
+            document.getElementById("add").style.display = "block"
+        }
+        function hideadd() {
+            document.getElementById("add").style.display = "none";
+            document.getElementById("content-in").style.display = "block"
+        }
+    </script>
+</head>
+<body>
+<div id="top">图书馆订阅系统</div>
+<div id="loading">正在加载中，请稍后...</div>
+
+<div class="book-detail reveal" id="book-detail" data-reveal>
+    <ul class="details">
+        <li v-for="item in details">
+            <span>索书号 : {{ item.search_index }}</span>
+            <span>条码号 : {{ item.bar_code }}</span>
+            <span>馆藏地 : {{ item.location }}</span>
+            <span>状态 : {{ item.status }}</span>
+            <span>年限 : {{ item.year }}</span>
+        </li>
+    </ul>
+
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div id="content-in">
+    <div id="try1">
+    </div>
+    <div id="try2">
+        <div class="include">
+            <button onclick="showadd()" class="add">增加订阅</button>
+            <button class="delete">删除订阅</button>
+            <button class="email">设置邮箱</button>
+        </div>
+    </div>
+    <div id="try3">
+        <div class="sousuo">
+            <span id="sousuo-hide" onclick="showsousuo()">搜索</span>
+            <div id="sousuo-show">
+                <input id="search" placeholder="搜索"/>
+                <a onclick="hidesousuo()" href="#">取消</a>
+            </div>
+        </div>
+
+        <div class="book">
+            <ul id="book-ul">
+                <li v-for="(item, index) in books" v-on:click="showDetail(index)">
+                    <h4 class="book-title">{{ item.name }}</h4>
+                    <p class="book-id">{{ item.book_index }}</p>
+
+                    <span>可借 {{ item.available_books }} / 总共 {{ item.total_books }}</span>
+                </li>
+            </ul>
+
+            <div class="more">
+                <button class="button"><span>加载更多</span></button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="add">
+    <a href="#" class="line1">
+        <span>书籍号</span>
+        <input id="add-book" placeholder="eg: 0000805778"/>
+    </a>
+    <button onclick="hideadd()">保存</button>
+</div>
+
+<div class="row">
+    <a href="#" id="read1" onclick="myFunction()"><i class="fa fa-book">借阅</i></a>
+    <a href="#" id="read2" onclick="show2()"><i class="fa fa-newspaper-o">订阅</i></a>
+    <a href="#" id="search" onclick="show3()"><i class="fa fa-search">搜索</i></a>
+</div>
+
+
+<script src="/static/js/vue.min.js"></script>
+<script>
+    function ajax(method, url, call_back, data) {
+        var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        xhr.open(method.toUpperCase(), url, true);
+        if (method.toLowerCase() == 'get') {
+            xhr.send(data)
+        }
+        else {
+            var contentType = 'application/json';
+
+            xhr.setRequestHeader("Content-type", contentType);
+            xhr.send(data);
+        }
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    call_back(xhr.responseText);
+                }
+            }
+        };
+    }
+</script>
+<script>
+    var details = new Vue({
+        el: '.details',
+        data: {
+            details: []
+        }
+    });
+
+    var app = new Vue({
+        el: '#book-ul',
+        data: {
+            books: []
+        },
+        methods: {
+            showDetail: function (index) {
+                book = this.books[index];
+                book_id = book.book_id;
+                document.querySelector("#loading").style.display = "block";
+                ajax('get', '/api/details/' + book_id, function (data) {
+                    data = JSON.parse(data);
+                    books_status = data.books_status;
+                    details.details = books_status;
+                    document.querySelector("#loading").style.display = "none";
+                    $(".book-detail").foundation('open')
+                });
+            }
+        }
+    });
+
+
+    var page = 1;
+
+    var search = document.querySelector("input#search").addEventListener('keydown', function (event) {
+        if (event.keyCode == '13') {
+            document.querySelector("#loading").style.display = "block";
+            var book_name = document.querySelector("input#search").value;
+            ajax('get', '/api/books/' + book_name + "?page=" + page, function (data) {
+                document.querySelector("#loading").style.display = "none";
+                document.querySelector(".more").style.display = "block";
+                app.books = JSON.parse(data).books;
+            });
+            page++;
+        }
+    });
+
+    document.querySelector(".more").addEventListener("click", function (event) {
+        document.querySelector("#loading").style.display = "block";
+        var book_name = document.querySelector("input#search").value;
+        ajax('get', '/api/books/' + book_name + "?page=" + page, function (data) {
+            document.querySelector("#loading").style.display = "none";
+            document.querySelector(".more").style.display = "block";
+            app.books.push.apply(app.books, (JSON.parse(data).books));
+        });
+        page++;
+    });
+</script>
+<script src="/static/vendor/jquery.js"></script>
+<script src="/static/vendor/foundation.min.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

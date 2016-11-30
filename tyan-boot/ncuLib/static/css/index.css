@@ -1,0 +1,275 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+#top {
+    background: #26a2ff;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    line-height: 47px;
+    font-size: 20px;
+    font-family: sans-serif;
+    color: #fff;
+    font-weight: bold;
+    position: fixed;
+    top: 0;
+}
+
+.row {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 46px;
+    border-top: #d9d9d9 1px solid;
+    background: #ffffff;
+}
+
+.row a {
+    display: inline-block;
+    line-height: 46px;
+    text-align: center;
+    text-decoration: none;
+    width: 32%;
+    color: #000;
+}
+
+#try1, #try2, #try3 {
+    display: none;
+}
+
+#try2 .include {
+    width: 92%;
+    margin: 0 auto;
+}
+
+#try2 .add, .delete {
+    width: 49.5%;
+    line-height: 41px;
+    display: inline-block;
+    color: #fff;
+    font-size: 18px;
+    font-family: sans-serif;
+    text-align: center;
+    border: none;
+    outline: none;
+    cursor: hand;
+    margin-top: 60px;
+}
+
+#try2 .add {
+    background-color: #26a2ff;
+}
+
+#try2 .delete {
+    background-color: #ef4f4f;
+    float: right;
+}
+
+#try2 .email {
+    display: block;
+    width: 100%;
+    line-height: 41px;
+    border: 1px #26a2ff solid;
+    font-size: 18px;
+    font-family: sans-serif;
+    text-align: center;
+    color: #26a2ff;
+    background: #fff;
+    margin-top: 10px;
+}
+
+.sousuo {
+    width: 100%;
+    box-sizing: border-box;
+    background: #d9d9d9;
+    padding: 10px 8px;
+    line-height: 36px;
+}
+
+.sousuo span {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    height: 36px;
+    background: #fff;
+    color: #9b9b9b;
+    width: 100%;
+}
+
+#sousuo-show {
+    display: none;
+    width: 100%;
+    height: 36px;
+}
+
+#sousuo-show input {
+    padding-left: 10px;
+    height: 36px;
+    font-size: 16px;
+    font-family: sans-serif;
+    border: none;
+    outline: none;
+    min-width: 80%;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+#sousuo-show a {
+    display: inline-block;
+    font-size: 16px;
+    font-family: sans-serif;
+    line-height: 36px;
+    color: #26a2ff;
+    margin-left: 0.5rem;
+}
+
+#add {
+    display: none;
+    width: 100%;
+    height: 100%;
+    margin-top: 50px;
+}
+
+#add .line1 {
+    line-height: 28px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 9px 10px;
+    border-top: #d9d9d9 1px solid;
+    border-bottom: #d9d9d9 1px solid;
+    display: block;
+}
+
+#add span {
+    color: #000;
+    font-size: 16px;
+    font-family: sans-serif;
+    width: 105px;
+    line-height: 28px;
+    display: inline-block;
+}
+
+#add #add-book {
+    display: inline-block;
+    width: 60%;
+    color: #d9d9d9;
+    font-size: 14px;
+    font-family: sans-serif;
+    outline: none;
+    border: none;
+    line-height: 28px;
+}
+
+#add button {
+    display: block;
+    width: 90%;
+    height: 41px;
+    background: green;
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+    border: none;
+    font-size: 20px;
+    font-family: sans-serif;
+    margin: 0 auto;
+    border-radius: 3px;
+    margin-top: 5px;
+}
+
+.book {
+    background: #ffffff;
+    margin-bottom: 46px;
+}
+
+.book ul {
+    margin-bottom: 0;
+}
+
+.book li {
+    list-style: none;
+    min-height: 2rem;
+    padding: 1rem 2rem;
+    border-bottom: #888888 solid 1px;
+}
+
+.book li span {
+    margin-top: 0.5rem;
+}
+
+.book-id {
+    color: #888;
+    font-size: 0.8rem;
+}
+
+#content-in {
+    padding-bottom: 46px;
+}
+
+#loading {
+    position: fixed;
+    width: 200px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 3px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    display: none;
+}
+
+.more {
+    background: #ffffff;
+    text-align: center;
+    font-size: 1rem;
+    height: 2rem;
+    padding: 1rem 0 1rem;
+    display: none;
+}
+
+.book-detail {
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 9999;
+    min-width: 80%;
+    background: #ffffff;
+    text-align: center;
+    border-radius: 0.5rem;
+    border: #888888 solid 1px;
+    padding: 1rem 1rem;
+}
+
+.book-detail ul li span {
+    display: block;
+}
+
+.detail-close {
+    margin: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.book-detail li {
+    list-style: none;
+}
+
+.book-detail li {
+    border-bottom: #9b9b9b solid 1px;
+}
