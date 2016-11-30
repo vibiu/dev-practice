@@ -109,10 +109,8 @@ def api_details(book_id):
 
 
 def api_add_subs(user, book_id):
-    # TODO: XSS check
     subscription.add(user, book_id)
 
 
 def api_del_subs(user, book_id):
-    # TODO: XSS check
     subscription.del_subs(user, book_id)
