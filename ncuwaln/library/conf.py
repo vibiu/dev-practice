@@ -1,0 +1,2 @@
+SECRET_KEY = r"\xf4/\xae\x87\xef\x9d-\xba}\xcb'\xf1\xe8P\xc8M\x90\xa2\xe2{nr))"
+SESSION_COOKIE_NAME = "SESSION_ID"
