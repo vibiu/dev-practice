@@ -1,0 +1,11 @@
+models.py
+model层，定义数据库表
+app.py
+控制层
+sendEmail
+发送邮件提醒模块，与主服务分开，后台运行它即可
+conf.py
+flask配置
+database.py
+生成sqlalchemy的db
+worm_script的worm.py里定义了爬虫类
